@@ -27,6 +27,7 @@
 /User/Lua/Floating_17
 /User/Lua/G_1
 /User/Lua/GameManager
+/User/Lua/HiddenDesk
 /User/Lua/MissionManager
 /User/Lua/Moving
 /User/Lua/Noise_1
@@ -38,6 +39,8 @@
 /User/Lua/Relocate_2
 /User/Lua/Rotate
 /User/Lua/S2CReceiver
+/User/Lua/Script
+/User/Lua/Script_1
 /User/Lua/StartingMemo
 /User/Lua/StartingMemo_1
 /User/Lua/TestButton1

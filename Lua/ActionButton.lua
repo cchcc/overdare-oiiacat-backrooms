@@ -55,7 +55,17 @@ button.Activated:Connect(function()
 	elseif actionType == G.Action.DOOR then
 		local pivotScript = button:GetAttribute(G.SCRIPT)
 		C2SEvent:FireServer(G.C2S.DOOR, { PivotScript = pivotScript})
+	elseif actionType == G.Action.HIDDEN_DESK then
+		playHiddenDeskSound()
 	end
 	
 	button.Visible = false
 end)
+
+function playHiddenDeskSound()
+	local sound = workspace.GameZone.HiddenDeskTouch.Sound
+	if sound.Playing then
+		sound:Stop()
+	end
+	sound:Play()
+end

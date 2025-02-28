@@ -41,6 +41,9 @@ local CollectionService = game:GetService("CollectionService")
 local animationTrack = nil
 local touchConnection = nil
 local touchPart = nil
+local landedConnection = nil
+
+
 
 -- 액션 버튼 클릭시
 button.Activated:Connect(function()
@@ -49,16 +52,28 @@ button.Activated:Connect(function()
 	local player = Players.LocalPlayer
 	local character = player.Character
 	local humanoid = character.Humanoid
+	
+	local function reset()
+		humanoid.WalkSpeed = G.WALK_SPEED
+		if touchPart then
+			touchPart:Destroy()
+			touchPart = nil
+		end
+	end	
+	
+	
+	if landedConnection == nil then  -- 점프 공격시 애니메이션 캔슬이 호출 안되서 이속이 0 고정되는 문제 우회법
+		landedConnection = humanoid.Landed:Connect(function()
+			reset()
+		end)
+	end
 
-	print("jump :" .. (humanoid.Jump and "t" or "f"))
-	if humanoid.Jump then return end	
 	
 	local animator = humanoid.Animator
 	local humanoidRootPart = character.HumanoidRootPart
 	local tool = character:FindFirstChildOfClass("Tool")
 	
 
-	local lastWalkSpeed = humanoid.WalkSpeed
 	if animationTrack == nil then
 		local animation = Instance.new("Animation")
 		-- a.AnimationId = "BasicAttackAnimation"
@@ -67,26 +82,17 @@ button.Activated:Connect(function()
 		animationTrack = animator:LoadAnimation(animation)
 		animationTrack.Ended:Connect(function()
 			print("anim Ended")
-			humanoid.WalkSpeed = lastWalkSpeed
-			if touchPart then
-				touchPart:Destroy()
-				touchPart = nil
-			end
+			reset()
 		end)
 	
 		animationTrack.Stopped:Connect(function()
 			print("anim Stopped")
-			humanoid.WalkSpeed = lastWalkSpeed
-			if touchPart then
-				touchPart:Destroy()
-				touchPart = nil
-			end
+			reset()
 		end)
 		
 	end
 	
 		
-	lastWalkSpeed = humanoid.WalkSpeed
 	humanoid.WalkSpeed = 0
 	animationTrack:Play()
 
@@ -111,7 +117,7 @@ button.Activated:Connect(function()
 		if hitCount then
 			local newHitCount = hitCount - 1 			
 			if newHitCount == 0 then
-				touched:Destroy()  -- 이거 로벌 에서 생성해서 삭제시켜야 함
+				touched:Destroy()  -- 이거 로컬 에서 생성해서 삭제시켜야 함
 			else
 				touched:SetAttribute(G.HIT_COUNT, newHitCount)
 			end

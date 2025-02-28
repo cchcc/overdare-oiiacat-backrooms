@@ -10,6 +10,8 @@ local G = {
 	SPAWN_TOOL_POSITION = Vector3.new(-270.0, 64.896477, -5010.0),  -- 미션 완료시 무기 스폰 위치
 	LAST_DOOR_POSITION = Vector3.new(-310.657837, 252.537537, -5445.92041),   -- 마지막 문 위치
 	LAST_DOOR_HIT_COUNT = 3,	-- 마지막 단계 문 몇번 쳐야 부서지는지 3
+	
+	WALK_SPEED = 800,  -- settings 에 설정해둔거. 동일하게 맞춰야함
 
 	-- 여기부터는 상수값	
 	
@@ -49,6 +51,7 @@ local G = {
 		STARTING_MEMO = "STARTING_MEMO",
 		MISSION_COLLECT = "MISSION_COLLECT",
 		DOOR = "DOOR",
+		HIDDEN_DESK = "HIDDEN_DESK",
 	},
 	
 	SCRIPT = "SCRIPT",

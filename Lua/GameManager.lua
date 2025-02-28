@@ -325,18 +325,7 @@ function GameManager.equip(player, data)
 	
 	local tool = ReplicatedStorage.Tool.Stick:Clone()
 	tool.Handle.Part.Color = data.Color
-	--tool.Handle.Part.Color = Color3.new(math.random(0,255), math.random(0,255), math.random(0,255))	
-	tool.Parent = player.Backpack
-	wait(0.01)
-			
 	humanoid:EquipTool(tool)
-	wait(0.01)
-			
-	tool.Parent = player.Backpack
-	wait(0.01)
-			
-	humanoid:EquipTool(tool)
-	wait(0.01)
 end
 
 function GameManager.attack(player)

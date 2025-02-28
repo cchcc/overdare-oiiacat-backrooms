@@ -17,9 +17,10 @@ local MISSION_COLLECT_POSITIONS = {
 	Vector3.new(1333.079346, 99.439789, -3934.3125),
 	Vector3.new(-841.689392, 107.643326, -2684.30835),
 	Vector3.new(-1150.0, 133.822784, 240.0),
-	Vector3.new(-1750.0, 143.822784, -3930.0),
-	Vector3.new(-1790.0, 153.822784, -1810.0),
+	Vector3.new(-1630.0, 143.822784, -1990.0),
+	Vector3.new(-1790.0, 123.822784, -3910.0),
 }
+
 	
 -- 액션 버튼 UI 연결
 local function applyActionButtonUi(actionType, obj, index)
@@ -58,6 +59,7 @@ end
 
 -- 게임 시작시 미션 초기화
 function MissionManager.init(missions)
+	print("MissionManager.init")
 	local player = Players.LocalPlayer
 	local actionButton = player.PlayerGui.ScreenGui.ActionButton
 	
@@ -68,6 +70,7 @@ function MissionManager.init(missions)
 		
 	-- 수집미션 랜덤위치
 	local collectMissionPosition = G.getRandomSelection(MISSION_COLLECT_POSITIONS, #missions)
+	print(collectMissionPosition)
 	
 	for i, mission in pairs(missions) do
 		if mission.type == G.MissionType.Collect then
