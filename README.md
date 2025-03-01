@@ -21,7 +21,7 @@ This project made by [OVERDARE Studio](http://create.overdare.com/)
   <tr>
     <td><img src="https://create.overdare.com/_next/image?url=https%3A%2F%2Fasset-prod.cdn.overdare.com%2Fimages%2Fgroup%2Flive%2F9a08ae88-4899-451f-9a1b-562f720de31a%2Fthumbnail%2Ff76423ace3d04b95be30406a6c566955.png&w=256&q=75" width="150" height="150"></td>
      <td>
-        Producer: Jaeni Lee <br/>
+        Producer: <a href="https://www.instagram.com/_ph0ton/">Jaeni Lee</a> <br/>
         3D Creator: <a href="https://www.instagram.com/dope_1988">HyunJun Song</a> <br/>
         Developer: <a href="https://github.com/cchcc">Hyunchul Jo</a>
      </td>
