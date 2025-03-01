@@ -7,7 +7,7 @@ local S2CEvent = ReplicatedStorage:WaitForChild("S2CEvent")
 local CollectionService = game:GetService("CollectionService")
 local Players = game:GetService("Players")
 local gameZoneFolder = workspace:WaitForChild("GameZone")
-
+local StarterGui = game:GetService("StarterGui")
 
 S2CEvent.OnClientEvent:Connect(function(msg, data)
 	if msg == G.S2C.INIT then
@@ -50,6 +50,8 @@ function init()
 	humanoid.Died:Connect(onDied)
 	
 	
+	-- ui 설정
+	StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Backpack, false)
 	
 end
 

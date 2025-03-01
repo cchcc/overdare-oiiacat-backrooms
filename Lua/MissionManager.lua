@@ -70,7 +70,6 @@ function MissionManager.init(missions)
 		
 	-- 수집미션 랜덤위치
 	local collectMissionPosition = G.getRandomSelection(MISSION_COLLECT_POSITIONS, #missions)
-	print(collectMissionPosition)
 	
 	for i, mission in pairs(missions) do
 		if mission.type == G.MissionType.Collect then

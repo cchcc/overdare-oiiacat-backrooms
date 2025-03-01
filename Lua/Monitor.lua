@@ -1,6 +1,5 @@
-﻿local imagaLabel = script.Parent
+﻿local imagaLabel = script.Parent.SurfaceGui.ImageLabel
 
-print(imagaLabel)
 
 while true do
 	wait(1.5)

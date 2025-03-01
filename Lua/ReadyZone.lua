@@ -14,7 +14,7 @@ local canTouch = true
 local TOUCH_DELAY = 0.3
 
 if RunService:IsStudio() then
-	readyZone.Touch.Transparency = 0.5
+	--readyZone.Touch.Transparency = 0.5
 end
 
 readyZone.Touch.Touched:Connect(function(touched)
