@@ -28,6 +28,7 @@ local G = {
 		EQUIP = "EQUIP",
 		ATTACK = "ATTACK", 
 		DOOR = "DOOR",
+		ASSIST_TARGET = "ASSIST_TARGET",
 	},
 	
 	-- server -> client
@@ -38,6 +39,8 @@ local G = {
 		START_GAME = "START_GAME",		-- data: missions
 		COMPLETE_ALL_MISSION = "COMPLETE_ALL_MISSION",
 		SPAWN_TOOL = "SPAWN_TOOL",
+		RESTART = "RESTART",
+		ASSIST_TARGET = "ASSIST_TARGET",
 	},
 	
 	MissionType = {

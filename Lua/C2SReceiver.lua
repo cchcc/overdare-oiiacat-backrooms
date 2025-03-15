@@ -31,6 +31,8 @@ C2SEvent.OnServerEvent:Connect(function (player, msg, data)
 		equipOrAttack(player)
 	elseif msg == G.C2S.DOOR then
 		GameManager.door(player, data)
+	elseif msg == G.C2S.ASSIST_TARGET then
+		GameManager.assistTarget(player)
 	else
 	end	
 	

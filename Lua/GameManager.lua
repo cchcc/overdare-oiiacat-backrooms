@@ -8,6 +8,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local G = require(ReplicatedStorage.G)
 local C2SEvent = ReplicatedStorage:WaitForChild("C2SEvent")
 local S2CEvent = ReplicatedStorage:WaitForChild("S2CEvent")
+local AssistOffEvent = ReplicatedStorage:WaitForChild("AssistOffEvent")
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 
@@ -84,6 +85,15 @@ function Party:isCompleteAllMission()
 		end
 	end
 	return true
+end
+
+function Party:nextMissionIndex()
+	for idx, m in ipairs(self.missions) do
+		if m.completed == false then
+			return idx
+		end
+	end
+	return -1
 end
 
 -- 보드에 표시할 텍스트
@@ -294,6 +304,7 @@ function GameManager.restart(player)
 	humanoid.Health = humanoid.MaxHealth
 	
 	S2CEvent:FireClient(player, G.S2C.BOARD)
+	S2CEvent:FireClient(player, G.S2C.RESTART)
 end
 
 function GameManager.died(player)
@@ -438,6 +449,28 @@ function GameManager.door(player, data)
 	else
 		pivot:SetAttribute(G.CLOSED, true)
 	end
+	
+end
+
+-- 해당 플레이어의 다음 타겟 파트를 보내줌
+function GameManager.assistTarget(player)
+	local party = GameManager.getPartyFromPlayer(player)
+	
+	-- 대기 상태
+	if not party or party.state == Party.State.READY then
+		S2CEvent:FireClient(player, G.S2C.ASSIST_TARGET, "return workspace.ReadyZone.ReadyZone.Touch")
+		return
+	end
+		
+	-- 미션 진행중
+	local nextMissionIndex = party:nextMissionIndex()
+	if nextMissionIndex ~= -1 then
+		S2CEvent:FireClient(player, G.S2C.ASSIST_TARGET, "return workspace.GameZone.Mission.Mission_Collect" .. nextMissionIndex)
+		return
+	end
+
+	-- 미션 완료
+	S2CEvent:FireClient(player, G.S2C.ASSIST_TARGET, "return workspace.GameZone.EndZone.Touch")
 	
 end
 

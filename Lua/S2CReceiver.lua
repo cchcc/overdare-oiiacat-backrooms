@@ -4,6 +4,7 @@ local G = require(ReplicatedStorage.G)
 local MissionManager = require(ReplicatedStorage.MissionManager)
 local C2SEvent = ReplicatedStorage:WaitForChild("C2SEvent")
 local S2CEvent = ReplicatedStorage:WaitForChild("S2CEvent")
+local AssistOffEvent = ReplicatedStorage:WaitForChild("AssistOffEvent")
 local CollectionService = game:GetService("CollectionService")
 local Players = game:GetService("Players")
 local gameZoneFolder = workspace:WaitForChild("GameZone")
@@ -14,10 +15,13 @@ S2CEvent.OnClientEvent:Connect(function(msg, data)
 		init()
 	elseif msg == G.S2C.START_GAME then
 		onStartGame(data)
+		AssistOffEvent:Fire()
 	elseif msg == G.S2C.SPAWN_TOOL then
 		spawnDroppedTool()
 	elseif msg == G.S2C.COMPLETE_ALL_MISSION then
 		flickDoor()
+	elseif msg == G.S2C.RESTART then
+		AssistOffEvent:Fire()
 	else
 	end	
 end)
@@ -48,11 +52,10 @@ function init()
 	local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 	
 	humanoid.Died:Connect(onDied)
-	
-	
+		
 	-- ui 설정
 	StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Backpack, false)
-	
+		
 end
 
 function onStartGame(data)
@@ -72,6 +75,7 @@ function onStartGame(data)
 	MissionManager.init(data.missions)
 	
 	playerGui.ScreenGui.Clear.Visible = false
+	
 end
 
 function spawnDroppedTool()
@@ -140,6 +144,7 @@ function flickDoor()
 		wait(3)
 	end
 end
+
 
 wait(0.01)
 C2SEvent:FireServer(G.C2S.INIT)
