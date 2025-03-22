@@ -7,9 +7,6 @@ local GameManager = require(ReplicatedStorage.GameManager)
 local C2SEvent = ReplicatedStorage:WaitForChild("C2SEvent")
 local S2CEvent = ReplicatedStorage:WaitForChild("S2CEvent")
 local Players = game:GetService("Players")
-local gameZoneFolder = workspace:WaitForChild("GameZone")
-local missionFolder = gameZoneFolder.Mission
-
 
 local MISSION_COLLECT_POSITIONS = {
 	Vector3.new(1248.310669, 117.643326, 165.69162),
@@ -48,6 +45,7 @@ local function applyActionButtonUi(actionType, obj, index)
 end
 
 local function findMissionPart(index)
+	local missionFolder = workspace.GameZone.Mission
 	for _, mission in ipairs(missionFolder:GetChildren()) do
 		if mission:GetAttribute(G.INDEX) == index then
 			return mission
@@ -59,12 +57,14 @@ end
 -- 게임 시작시 미션 초기화
 function MissionManager.init(missions)
 	print("MissionManager.init")
-	local player = Players.LocalPlayer
-	local actionButton = player.PlayerGui.ScreenGui.ActionButton
 	
-
-	for _, o in pairs(missionFolder:GetChildren()) do
-		o:Destroy()
+	-- 기존 미션 제거	
+	local missionFolder = workspace.GameZone.Mission
+	local oldMissioins = missionFolder:GetChildren()
+	if oldMissioins then
+		for _, o in pairs(oldMissioins) do
+			o:Destroy()
+		end
 	end
 		
 	-- 수집미션 랜덤위치
@@ -82,6 +82,7 @@ function MissionManager.init(missions)
 				missionPart.Transparency = 1
 			end
 			
+			local missionFolder = workspace.GameZone.Mission
 			missionPart.Parent = missionFolder
 		end
 	end

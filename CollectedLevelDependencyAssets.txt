@@ -1,5 +1,7 @@
 /User/OIIA_CAT
 /User/Lua/ActionButton
+/User/Lua/AssistArrow
+/User/Lua/AssistButton
 /User/Lua/AttackButton
 /User/Lua/Board
 /User/Lua/C2SReceiver
@@ -50,8 +52,6 @@
 /User/Lua/VisibleOnStudio
 /User/Lua/VisibleOnStudio_1
 /User/Lua/VisibleOnStudio_2
-/User/Lua/AssistArrow
-/User/Lua/AssistButton
 /User/metadata
 /User/OIIA_CAT
 /User/WorldAssetList
