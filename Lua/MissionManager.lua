@@ -20,8 +20,8 @@ local MISSION_COLLECT_POSITIONS = {
 	
 -- 액션 버튼 UI 연결
 local function applyActionButtonUi(actionType, obj, index)
+	--print("applyActionButtonUi: "..obj)
 	obj.Touched:Connect(function(touched)
-	
 		local player = G.getPlayerFromTouched(touched)
 		if player and player.Name == Players.LocalPlayer.Name and G.visibleActionUi() == false then
 			local actionButton = player.PlayerGui.ScreenGui.ActionButton
@@ -47,7 +47,8 @@ end
 local function findMissionPart(index)
 	local missionFolder = workspace.GameZone.Mission
 	for _, mission in ipairs(missionFolder:GetChildren()) do
-		if mission:GetAttribute(G.INDEX) == index then
+		local att = tonumber(mission:GetAttribute(G.INDEX))
+		if att == index then
 			return mission
 		end
 	end
@@ -75,7 +76,7 @@ function MissionManager.init(missions)
 			local missionPart = ReplicatedStorage.Mission.Mission_Collect:Clone()
 			missionPart.Position = collectMissionPosition[i]
 			missionPart.Name = missionPart.Name .. i
-			missionPart:SetAttribute("index", i)
+			missionPart:SetAttribute(G.INDEX, i)
 			applyActionButtonUi(G.Action.MISSION_COLLECT, missionPart, i)
 
 			if not RunService:IsStudio() then
@@ -96,6 +97,7 @@ function MissionManager.clickedActionButton(index, missionType)
 		
 		local disappearCollectScript = ReplicatedStorage.Script.DisappearCollect:Clone()
 		disappearCollectScript.Name = missionPart.Name
+		print(disappearCollectScript.Name)
 		disappearCollectScript.Parent = Players.LocalPlayer.PlayerScripts
 				
 		
@@ -104,7 +106,7 @@ function MissionManager.clickedActionButton(index, missionType)
 		-- jumpscare
 		if math.random(1,10) < 5 then
 			GameManager.jumpscare(Players.LocalPlayer)
-		end		
+		end
 	end
 end
 

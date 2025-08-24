@@ -44,7 +44,7 @@ button.Activated:Connect(function()
 	local player = Players.LocalPlayer
 	-- C2SEvent:FireServer(G.C2S.LOG, "clicked ActionButton:" .. (actionType or ""))
 
-	local actionUI = player.PlayerGui.ScreenGui.ActionUI	
+	local actionUI = player.PlayerGui.ScreenGui.ActionUI
 	
 	-- 해당하는 ActionUI 보이기
 	if actionType == G.Action.STARTING_MEMO then
@@ -53,8 +53,7 @@ button.Activated:Connect(function()
 		local index = button:GetAttribute(G.INDEX)
 		MissionManager.clickedActionButton(index, G.MissionType.Collect)
 	elseif actionType == G.Action.DOOR then
-		local pivotScript = button:GetAttribute(G.SCRIPT)
-		C2SEvent:FireServer(G.C2S.DOOR, { PivotScript = pivotScript})
+		C2SEvent:FireServer(G.C2S.DOOR)
 	elseif actionType == G.Action.HIDDEN_DESK then
 		playHiddenDeskSound()
 	end

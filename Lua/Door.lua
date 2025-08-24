@@ -36,7 +36,6 @@ function setDoors()
 				local actionButton = player.PlayerGui.ScreenGui.ActionButton
 				actionButton.Visible = true
 				actionButton:SetAttribute(G.ACTION_TYPE, G.Action.DOOR)
-				actionButton:SetAttribute(G.SCRIPT, door.PivotScript)
 			end
 		end)
 		

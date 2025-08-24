@@ -47,9 +47,6 @@ function createAssistArrow()
 	-- 방향은 서버에서 수신후 지정
 	C2SEvent:FireServer(G.C2S.ASSIST_TARGET)
 		
-	--local assistArraowScript = ReplicatedStorage.Script.AssistArrow:Clone()
-	--assistArraowScript:SetAttribute(G.SCRIPT, "return workspace.ReadyZone.ReadyZone.Touch")
-	--assistArraowScript.Parent = player.PlayerScripts
 end
 
 
@@ -71,8 +68,9 @@ end
 S2CEvent.OnClientEvent:Connect(function(msg, data)
 	if msg == G.S2C.ASSIST_TARGET and isOn then
 	    local player = Players.LocalPlayer
+	    print("C2S: " .. msg .. " ," .. player.Name .. ", " .. (data or ""))
 	    local assistArraowScript = ReplicatedStorage.Script.AssistArrow:Clone()
-	    assistArraowScript:SetAttribute(G.SCRIPT, data)
+		assistArraowScript:SetAttribute("TargetPosition", data)
 	    assistArraowScript.Parent = player.PlayerScripts
 	end	
 end)

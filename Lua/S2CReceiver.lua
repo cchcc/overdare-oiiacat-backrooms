@@ -49,12 +49,13 @@ function init()
 	
 	local character = player.Character
 	local humanoid = character:WaitForChild("Humanoid")
-	local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 	
 	humanoid.Died:Connect(onDied)
 		
 	-- ui 설정
 	StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.Backpack, false)
+	local backpackEnabled = StarterGui:GetCoreGuiEnabled(Enum.CoreGuiType.Backpack)
+	print("CoreGuiType.Backpack Enabled:", backpackEnabled)
 		
 end
 
@@ -69,8 +70,19 @@ function onStartGame(data)
 	
 	-- 피격시 연출 스크립트 추가
 	local changeColorWhenHit = ReplicatedStorage.Script.ChangeColorWhenHit:Clone()
-	changeColorWhenHit:SetAttribute(G.SCRIPT, "return workspace.GameZone.DoorWall")
-	changeColorWhenHit.Parent = player.PlayerScripts
+	changeColorWhenHit:SetAttribute(G.TARGET, "dorrt")
+	
+	doorWall.Touched:Connect(function(touched)
+	--print(part .. " touched :" .. touched)
+	if CollectionService:HasTag(touched, G.Tag.HitRange) then
+		--print("hit range")
+		wait(0.15)
+		local lastColor = doorWall.Color
+		doorWall.Color = Color3.new(151, 0, 0)  -- red
+		wait(0.15)
+		doorWall.Color = lastColor
+		end
+	end)
 	
 	MissionManager.init(data.missions)
 	

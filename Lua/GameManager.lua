@@ -228,7 +228,7 @@ function GameManager.sendS2CParty(party, s2c, data)
 end
 
 function GameManager.sendS2CPartyId(partyId, s2c, data)
-	local party = GameManager.getParty(partyid)
+	local party = GameManager.getParty(partyId)
 	if party then
 		GameManager.sendS2CParty(party, s2c, data)
 	end
@@ -377,13 +377,12 @@ function GameManager.jumpscare(player)
 	viewPart.CanCollide = false
 	viewPart.CanTouch = false
 	viewPart.Size = Vector3.new(characterSize.X, 30, characterSize.Z)
-	viewPart.CFrame = humanoidRootPart.CFrame * CFrame.new(0, 40, -(characterSize.Z))
+	viewPart.CFrame = humanoidRootPart.CFrame * CFrame.new(0, 100, -(characterSize.Z*5))
 	viewPart.Transparency = 0.9
 	viewPart.Parent = humanoidRootPart
 	
 
 	-- 시점 변경
-    local viewPartPos = viewPart.Position
     
     camera.CameraType = Enum.CameraType.Follow
     local lastSubject = camera.CameraSubject
@@ -391,7 +390,7 @@ function GameManager.jumpscare(player)
     
     -- jumpscare 애니메이션
     local jumpScare = ReplicatedStorage.JumpScare:Clone()
-    jumpScare.Position = viewPart.Position + (viewPart.CFrame.LookVector * (viewPart.Size.Z * 2.5))
+    jumpScare.Position = viewPart.Position + (viewPart.CFrame.LookVector * (viewPart.Size.Z * 1.5))
     jumpScare.CFrame = CFrame.new(jumpScare.Position, jumpScare.Position + humanoidRootPart.CFrame.LookVector)
     jumpScare.Parent = workspace
     
@@ -434,21 +433,23 @@ function GameManager.door(player, data)
 	local openAngle = 90
 	local moveSpeed = 90
 
-	local pivot = load(data.PivotScript)()
+	-- TODO
+
+	--local pivot = load(data.PivotScript)()
 	
-	local closed = pivot:GetAttribute(G.CLOSED)
-	local aymin = pivot:GetAttribute("aymin")
-	if aymin == nil then pivot:SetAttribute("aymin", pivot.CFrame.Orientation.Y) end
-	local aymax = pivot:GetAttribute("aymax")
-	if aymax == nil then pivot:SetAttribute("aymax", pivot.CFrame.Orientation.Y + openAngle) end
+	--local closed = pivot:GetAttribute(G.CLOSED)
+	--local aymin = pivot:GetAttribute("aymin")
+	--if aymin == nil then pivot:SetAttribute("aymin", pivot.CFrame.Orientation.Y) end
+	--local aymax = pivot:GetAttribute("aymax")
+	--if aymax == nil then pivot:SetAttribute("aymax", pivot.CFrame.Orientation.Y + openAngle) end
 		
 	--print(pivot)
 	
-	if closed then
-		pivot:SetAttribute(G.CLOSED, false)
-	else
-		pivot:SetAttribute(G.CLOSED, true)
-	end
+	--if closed then
+	--	pivot:SetAttribute(G.CLOSED, false)
+	--else
+	--	pivot:SetAttribute(G.CLOSED, true)
+	--end
 	
 end
 
@@ -458,19 +459,22 @@ function GameManager.assistTarget(player)
 	
 	-- 대기 상태
 	if not party or party.state == Party.State.READY then
-		S2CEvent:FireClient(player, G.S2C.ASSIST_TARGET, "return workspace.ReadyZone.ReadyZone.Touch")
+		local readyZonePos = workspace.ReadyZone.ReadyZone.Touch.CFrame.Position
+		S2CEvent:FireClient(player, G.S2C.ASSIST_TARGET, readyZonePos)
 		return
 	end
 		
 	-- 미션 진행중
 	local nextMissionIndex = party:nextMissionIndex()
 	if nextMissionIndex ~= -1 then
-		S2CEvent:FireClient(player, G.S2C.ASSIST_TARGET, "return workspace.GameZone.Mission.Mission_Collect" .. nextMissionIndex)
+		local scr = "return workspace.GameZone.Mission.Mission_Collect" .. nextMissionIndex .. ".Position"
+		S2CEvent:FireClient(player, G.S2C.ASSIST_TARGET, nextMissionIndex)
 		return
 	end
 
 	-- 미션 완료
-	S2CEvent:FireClient(player, G.S2C.ASSIST_TARGET, "return workspace.GameZone.EndZone.Touch")
+	local endZonePos = workspace.GameZone.EndZone.Touch.CFrame.Position
+	S2CEvent:FireClient(player, G.S2C.ASSIST_TARGET, endZonePos)
 	
 end
 

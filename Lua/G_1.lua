@@ -57,7 +57,7 @@ local G = {
 		HIDDEN_DESK = "HIDDEN_DESK",
 	},
 	
-	SCRIPT = "SCRIPT",
+	TARGET = "TARGET",
 	CLOSED = "CLOSED",
 	HIT_COUNT = "HIT_COUNT",
 	
@@ -78,7 +78,7 @@ function G.getPlayerFromTouched(touched)
 		local player = Players:GetPlayerFromCharacter(touched.Parent)
 		return player
 	end
-	return player
+	return nil
 end
 
 
@@ -139,6 +139,16 @@ function G.getRandomSelection(array, count)
     end
 
     return selection
+end
+
+function G.findChildByName(o, name)
+	local children = o:GetChildren()
+	for _, v in ipairs(children) do
+		if tostring(v.Name) == name then
+			return v 
+		end
+	end
+	return nil
 end
 
 return G

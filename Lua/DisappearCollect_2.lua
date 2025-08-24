@@ -1,6 +1,4 @@
-﻿local pathScript = "return workspace.GameZone.Mission." .. script.Name .. ".Part"
-
-local part = load(pathScript)()
+﻿local part = workspace["GameZone"]["Mission"][script.Name]["Part"]
 local missionPart = part.Parent
 local RunService = game:GetService("RunService")
 
@@ -17,6 +15,7 @@ local connection
 local function animatePart(deltaTime)
 	if elapsedTime >= duration then
 		missionPart:Destroy() -- 시간이 지나면 파트 제거
+		if connection then connection:Disconnect() end
 		script:Destroy()
 		return
 	end
@@ -31,7 +30,7 @@ local function animatePart(deltaTime)
 end
 
 connection = RunService.Heartbeat:Connect(function(deltaTime)
-		if part.Parent then
+		if part and part.Parent then
 			animatePart(deltaTime)
 		else
 			connection:Disconnect()

@@ -12,14 +12,19 @@ local characterSize = humanoidRootPart.Size
 local characterPos = humanoidRootPart.Position
 
 
---local target = workspace.ReadyZone.ReadyZone.Touch
-
-local target = load(script:GetAttribute(G.SCRIPT))()
 local connection
 connection = RunService.RenderStepped:Connect(function()
 	local arrow = humanoidRootPart.AssistArrow
-	local targetPosition = target.Position
-	
+	local targetPosition = script:GetAttribute("TargetPosition")
+	if type(targetPosition) == "number" then
+		local targetPart = workspace.GameZone.Mission:FindFirstChild("Mission_Collect"..targetPosition)
+		if targetPart and targetPart.Parent then
+			targetPosition = targetPart.Position
+		else
+			targetPosition = nil
+		end
+	end		
+		
     if character and arrow and targetPosition then
         local arrowPosition = arrow.PrimaryPart.Position
         
